@@ -1,5 +1,6 @@
 import strawberry
 from typing import List
+from openai_client import suggest_recipes
 
 # Mock database
 recipes_db = []
@@ -46,6 +47,10 @@ class Query:
             if recipe.title == title:
                 return recipe
         return None
+
+    @strawberry.field
+    def suggest_recipe(self, ingredients: List[str] = None, cuisine: str = None) -> str:
+        return suggest_recipes(ingredients, cuisine)
 
 
 @strawberry.type
